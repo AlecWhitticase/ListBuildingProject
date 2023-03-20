@@ -23,6 +23,7 @@ def list_gen(UNIT_LIST):
             print("You need at least one hq")
             return(None)
     else:
+        print(len(hq))
         army.append(hq[random.randint(0,len(hq))])
         total_cost += hq[0][1]
     print("1 = Troops, 2 = Elites, 3 = Fast, 4 = heavy")
@@ -49,9 +50,10 @@ def list_gen(UNIT_LIST):
                 army.append(new_heavy)
                 total_cost += new_heavy[1]
         else:
-            new_unit_type = random.randit(0,4)
+            new_unit_type = random.randint(0,4)
             if new_unit_type == 0:
                 if len(hq) != 0:
+                    print(len(hq))
                     new_hq = hq[random.randint(0,len(hq))]
                     army.append(new_hq)
                     total_cost += new_hq[1]
@@ -107,7 +109,7 @@ def catagory(units):
 
 def main():
     while True:
-        next_action = int(input("1 to add a unit, 2 to generate, 3 to print current pool"))
+        next_action = int(input("1 to add a unit, 2 to generate, 3 to print current pool "))
         if next_action == 1:
             unit_name = str(input("Unit Name ")) 
             unit_cost = int(input("Unit Cost "))
@@ -115,8 +117,7 @@ def main():
             unit_slot = str(input("slot "))
             add_unit(unit_name,unit_cost,unit_slot)
         elif next_action == 2:
-            rand_list = list_gen(UNIT_LIST)
-            print(rand_list)
+            print(list_gen(UNIT_LIST))
         elif next_action == 3:
             print(UNIT_LIST)
 
