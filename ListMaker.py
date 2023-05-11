@@ -1,6 +1,7 @@
 import random
 
 UNIT_LIST = []
+LOOPIN = 0
 
 def add_unit(name,points,slot):
     "Creates a unit and adds that unit to the pool. Touple."
@@ -24,59 +25,70 @@ def list_gen(UNIT_LIST):
             return(None)
     else:
         print(len(hq))
-        army.append(hq[random.randint(0,len(hq))])
+        army.append(hq[random.randint(0,len(hq)-1)])
         total_cost += hq[0][1]
     print("1 = Troops, 2 = Elites, 3 = Fast, 4 = heavy")
     ark_slot = input("What's your ark slot comrade")
-    while total_cost < 2000:
+    while total_cost <= 1900:
         if ark_slot == 1:
             if len[army] > 4:
-                new_troop = troop[random.randint(0,len(troop))]
-                army.append(new_troop)
+                new_troop = troop[random.randint(0,len(troop)-1)]
+                army.append(new_troop) 
                 total_cost += new_troop[1]
         if ark_slot == 2:
             if len[army] > 4:
-                new_elite = elite[random.randint(0,len(elite))]
+                new_elite = elite[random.randint(0,len(elite)-1)]
                 army.append(new_elite)
                 total_cost += new_elite[1]
         if ark_slot == 3:
             if len[army] > 4:
-                new_fast = fast[random.randint(0,len(fast))]
+                new_fast = fast[random.randint(0,len(fast)-1)]
                 army.append(new_fast)
                 total_cost += new_fast[1]
         if ark_slot == 4:
             if len[army] > 4:
-                new_heavy = heavy[random.randint(0,len(heavy))]
+                new_heavy = heavy[random.randint(0,len(heavy)-1)]
                 army.append(new_heavy)
                 total_cost += new_heavy[1]
-        else:
-            new_unit_type = random.randint(0,4)
-            if new_unit_type == 0:
-                if len(hq) != 0:
-                    print(len(hq))
-                    new_hq = hq[random.randint(0,len(hq))]
+
+        new_unit_type = random.randint(0,4)2
+        if new_unit_type == 0:      
+            if len(hq) != 0:
+                new_hq = hq[random.randint(0,len(hq)-1)]
+                if points_check(new_hq[1],total_cost) == True:
                     army.append(new_hq)
+                    hq.remove(new_hq)
                     total_cost += new_hq[1]
-            if new_unit_type == 1:
-                if len(troop) != 0:
-                    new_troop = troop[random.randint(0,len(troop))]
+        if new_unit_type == 1:
+            if len(troop) != 0:
+                new_troop = troop[random.randint(0,len(troop)-1)]
+                if points_check(new_troop[1],total_cost) == True:
                     army.append(new_troop)
+                    troop.remove(new_troop)
                     total_cost += new_troop[1]
-            if new_unit_type == 2:
-                if len(elite) != 0:
-                    new_elite = elite[random.randint(0,len(elite))]
+        if new_unit_type == 2:
+            if len(elite) != 0:
+                new_elite = elite[random.randint(0,len(elite)-1)]
+                if points_check(new_elite[1],total_cost) == True:
                     army.append(new_elite)
+                    elite.remove(new_elite)
                     total_cost += new_elite[1]
-            if new_unit_type == 3:
-                if len(fast) != 0:
-                    new_fast = fast[random.randint(0,len(fast))]
-                    army.append(new_fast)
-                    total_cost += new_fast[1]
-            if new_unit_type == 4:
-                if len(heavy) != 0:
-                    new_heavy = heavy[random.randint(0,len(heavy))]
+        if new_unit_type == 3:
+            if len(fast) != 0:
+                new_fast = fast[random.randint(0,len(fast)-1)]
+                if points_check(new_fast[1],total_cost) == True:
+                        army.append(new_fast)
+                        fast.remove(new_fast)
+                        total_cost += new_fast[1]
+        if new_unit_type == 4:
+            if len(heavy) != 0:
+                new_heavy = heavy[random.randint(0,len(heavy)-1)]
+                if points_check(new_heavy[1],total_cost) == True:
                     army.append(new_heavy)
+                    heavy.remove(new_heavy)
                     total_cost += new_heavy[1]
+    if total_cost < 2000:
+        army.append(["upgrades",1,2000-total_cost])
     return army
                        
 
@@ -104,7 +116,11 @@ def catagory(units):
     return(hq,troop,elite,fast,heavy)
 
 
-    
+def points_check(unit_cost,list_cost):
+    if (list_cost + unit_cost) <= 2000:
+        return True
+    else:
+        return False
 
 
 def main():
@@ -122,7 +138,13 @@ def main():
             print(UNIT_LIST)
 
 
-master_of_possession = ["MoP",500,1]
-Noise_Marine = ["noise marine",500,2]
-UNIT_LIST=[master_of_possession,Noise_Marine,Noise_Marine,Noise_Marine]
+master_of_possession = ["MoP",125,1]
+Noise_Marine = ["noise marine",135,2]
+Legionaries = ["Legionaries",200,2]
+Possessed = ["Possessed",280,3]
+VenomCrawler = ["VenomCrawler",105,4]
+cultists = ["cultists",50,2]
+spawn = ["spawn",25,4]
+UNIT_LIST=[master_of_possession,Noise_Marine,Noise_Marine,Noise_Marine,VenomCrawler,VenomCrawler,VenomCrawler,Possessed,Possessed,Possessed,Legionaries,cultists,cultists,cultists,spawn,spawn,spawn]
 main()
+
